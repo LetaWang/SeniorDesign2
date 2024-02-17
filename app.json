@@ -20,7 +20,7 @@
       ]
     ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/sunglasses.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
