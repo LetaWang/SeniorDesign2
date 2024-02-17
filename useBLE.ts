@@ -12,8 +12,9 @@ import * as ExpoDevice from "expo-device";
 
 import base64 from "react-native-base64";
 
-const HEART_RATE_UUID = "0000180d-0000-1000-8000-00805f9b34fb";
-const HEART_RATE_CHARACTERISTIC = "00002a37-0000-1000-8000-00805f9b34fb";
+// Also need to change this 
+const HEART_RATE_UUID = "181A";
+const HEART_RATE_CHARACTERISTIC = "2A76";
 
 interface BluetoothLowEnergyApi {
   requestPermissions(): Promise<boolean>;
@@ -137,18 +138,20 @@ function useBLE(): BluetoothLowEnergyApi {
       return -1;
     }
 
+    // This is where i need to update
+
     const rawData = base64.decode(characteristic.value);
-    let innerHeartRate: number = -1;
+    let innerHeartRate: number = +rawData;
 
-    const firstBitValue: number = Number(rawData) & 0x01;
+    // const firstBitValue: number = Number(rawData) & 0x01;
 
-    if (firstBitValue === 0) {
-      innerHeartRate = rawData[1].charCodeAt(0);
-    } else {
-      innerHeartRate =
-        Number(rawData[1].charCodeAt(0) << 8) +
-        Number(rawData[2].charCodeAt(2));
-    }
+    // if (firstBitValue === 0) {
+    //   innerHeartRate = rawData[1].charCodeAt(0);
+    // } else {
+    //   innerHeartRate =
+    //     Number(rawData[1].charCodeAt(0) << 8) +
+    //     Number(rawData[2].charCodeAt(2));
+    // }
 
     setHeartRate(innerHeartRate);
   };

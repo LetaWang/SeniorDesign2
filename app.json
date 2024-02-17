@@ -1,17 +1,20 @@
 {
   "expo": {
-    "name": "expo-ble-sample",
+    "name": "Vitamin D Tracker",
     "slug": "expo-ble-sample",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/sunglasses.png",
     "userInterfaceStyle": "light",
     "plugins": [
       [
         "@config-plugins/react-native-ble-plx",
         {
           "isBackgroundEnabled": true,
-          "modes": ["peripheral", "central"],
+          "modes": [
+            "peripheral",
+            "central"
+          ],
           "bluetoothAlwaysPermission": "Allow $(PRODUCT_NAME) to connect to bluetooth devices"
         }
       ]
@@ -24,14 +27,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dfriyia2.expoblesample"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/sunglasses.png",
         "backgroundColor": "#FFFFFF"
       },
       "permissions": [
@@ -43,6 +48,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7efa4ea8-a8e3-4b02-b8fb-6659a3622b15"
+      }
     }
   }
 }
