@@ -49,7 +49,7 @@ const App = () => {
           </>
         ) : (
           <Text style={styles.heartRateTitleText}>
-            Please Connect to a UV Monitor
+            RUNNING LOCALLY trying to update images to a UV Monitor
           </Text>
         )}
       </View>
