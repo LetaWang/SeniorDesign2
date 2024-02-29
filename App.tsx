@@ -15,7 +15,7 @@ function App() {
 
   return (
    <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Navigator initialRouteName="Profile">
         <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="History" component={History} options={{ headerShown: false }}/>
         <Stack.Screen name="Bluetooth" component={BluetoothComponent} options={{ headerShown: false }}/>
