@@ -44,12 +44,12 @@ const App = () => {
         {connectedDevice ? (
           <>
             <PulseIndicator />
-            <Text style={styles.heartRateTitleText}>Your Heart Rate Is:</Text>
-            <Text style={styles.heartRateText}>{heartRate} bpm</Text>
+            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
+            <Text style={styles.heartRateText}>{heartRate}</Text>
           </>
         ) : (
           <Text style={styles.heartRateTitleText}>
-            RUNNING LOCALLY trying to update images to a UV Monitor
+            UV Index
           </Text>
         )}
       </View>
