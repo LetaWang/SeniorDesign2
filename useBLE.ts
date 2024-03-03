@@ -149,7 +149,7 @@ function useBLE(): BluetoothLowEnergyApi {
 
         const data = fromHexString(hexString)[0].toString(); // convert Uint8Array to string
 
-    setHeartRate(innerHeartRate);
+    setHeartRate(data);
 
 //     sendData("1024");
   };
@@ -159,10 +159,10 @@ function useBLE(): BluetoothLowEnergyApi {
       if (connectedDevice) {
         const serviceUUID = HEART_RATE_UUID;
         const characteristicUUID = "8DE7";
-  
+
         // Convert the string data to bytes if needed
         const dataBytes = base64.encode(data);
-  
+
         // Use the writeCharacteristicWithResponse or writeCharacteristicWithoutResponse based on your requirement
         await bleManager.writeCharacteristicWithResponseForDevice(
           connectedDevice.id,
@@ -170,7 +170,7 @@ function useBLE(): BluetoothLowEnergyApi {
           characteristicUUID,
           dataBytes
         );
-  
+
         console.log(`Data sent successfully: ${data}`);
       } else {
         console.log("No Device Connected");
@@ -179,7 +179,7 @@ function useBLE(): BluetoothLowEnergyApi {
       console.error("Failed to send data:", error);
     }
   };
-  
+
   const startStreamingData = async (device: Device) => {
     if (device) {
       device.monitorCharacteristicForService(
