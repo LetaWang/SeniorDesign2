@@ -151,7 +151,7 @@ function useBLE(): BluetoothLowEnergyApi {
 
     setHeartRate(data);
 
-//     sendData("1024");
+    sendData("1024");
   };
 
   const sendData = async (data: string) => {
