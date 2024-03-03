@@ -158,7 +158,7 @@ function useBLE(): BluetoothLowEnergyApi {
     try {
       if (connectedDevice) {
         const serviceUUID = HEART_RATE_UUID;
-        const characteristicUUID = "8DE7";
+        const characteristicUUID = HEART_RATE_CHARACTERISTIC;
 
         // Convert the string data to bytes if needed
         const dataBytes = base64.encode(data);
