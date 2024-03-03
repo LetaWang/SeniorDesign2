@@ -124,8 +124,8 @@ function useBLE(): BluetoothLowEnergyApi {
       return -1;
     }
     // This is where i need to update
-//     const rawData = base64.decode(characteristic.value);
-//     let innerHeartRate: number = +rawData;
+    const rawData = base64.decode(characteristic.value);
+    let innerHeartRate: number = +rawData;
     // const firstBitValue: number = Number(rawData) & 0x01;
     // if (firstBitValue === 0) {
     //   innerHeartRate = rawData[1].charCodeAt(0);
@@ -134,24 +134,24 @@ function useBLE(): BluetoothLowEnergyApi {
     //     Number(rawData[1].charCodeAt(0) << 8) +
     //     Number(rawData[2].charCodeAt(2));
     // }
-    const raw = base64.decode(characteristic.value); // convert base64 to raw binary data held in a string
-        let hexString = "";
-        for (let i = 0; i < raw.length; i++) { // convert base64 to hex string
-            const hex = raw.charCodeAt(i).toString(16);
-            hexString += hex.length === 2 ? hex : "0" + hex;
-        }
-        hexString = hexString.toUpperCase();
+//     const raw = base64.decode(characteristic.value); // convert base64 to raw binary data held in a string
+//         let hexString = "";
+//         for (let i = 0; i < raw.length; i++) { // convert base64 to hex string
+//             const hex = raw.charCodeAt(i).toString(16);
+//             hexString += hex.length === 2 ? hex : "0" + hex;
+//         }
+//         hexString = hexString.toUpperCase();
+//
+//         const fromHexString = (hexString: string) => // convert hex string to Uint8Array
+//             Uint8Array.from(
+//                 hexString!.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
+//             );
+//
+//         const data = fromHexString(hexString)[0].toString(); // convert Uint8Array to string
 
-        const fromHexString = (hexString: string) => // convert hex string to Uint8Array
-            Uint8Array.from(
-                hexString!.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
-            );
+    setHeartRate(innerHeartRate);
 
-        const data = fromHexString(hexString)[0].toString(); // convert Uint8Array to string
-
-    setHeartRate(data);
-
-    sendData("1024");
+//     sendData("1024");
   };
 
   const sendData = async (data: string) => {
