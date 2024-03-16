@@ -19,6 +19,7 @@ const App = () => {
     connectedDevice,
     heartRate,
     disconnectFromDevice,
+    sendData,
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -43,6 +44,14 @@ const App = () => {
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
+          <TouchableOpacity
+                  onPress={sendData}
+                  style={styles.ctaButton}
+                >
+                  <Text style={styles.ctaButtonText}>
+                    SendVitaminD
+                  </Text>
+          </TouchableOpacity>
             <PulseIndicator />
             <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
             <Text style={styles.heartRateText}>{heartRate}</Text>

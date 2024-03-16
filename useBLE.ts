@@ -199,6 +199,7 @@ function useBLE(): BluetoothLowEnergyApi {
     connectedDevice,
     disconnectFromDevice,
     heartRate,
+    sendData,
   };
 }
 export default useBLE;
