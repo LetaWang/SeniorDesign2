@@ -45,7 +45,7 @@ const App = () => {
         {connectedDevice ? (
           <>
           <TouchableOpacity
-                  onPress={sendData}
+                  onPress={sendData("24")}
                   style={styles.ctaButton}
                 >
                   <Text style={styles.ctaButtonText}>
