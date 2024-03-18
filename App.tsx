@@ -46,15 +46,7 @@ const App = () => {
           <>
 
             <PulseIndicator />
-            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
-              <TouchableOpacity
-                      onPress={sendData("24")}
-                      style={styles.ctaButton}
-                    >
-                      <Text style={styles.ctaButtonText}>
-                        SendVitaminD
-                      </Text>
-              </TouchableOpacity>
+            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>s
             <Text style={styles.heartRateText}>{heartRate}</Text>
           </>
         ) : (
