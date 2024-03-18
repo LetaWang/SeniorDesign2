@@ -44,16 +44,17 @@ const App = () => {
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
-          <TouchableOpacity
-                  onPress={sendData("24")}
-                  style={styles.ctaButton}
-                >
-                  <Text style={styles.ctaButtonText}>
-                    SendVitaminD
-                  </Text>
-          </TouchableOpacity>
+
             <PulseIndicator />
             <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
+              <TouchableOpacity
+                      onPress={sendData("24")}
+                      style={styles.ctaButton}
+                    >
+                      <Text style={styles.ctaButtonText}>
+                        SendVitaminD
+                      </Text>
+              </TouchableOpacity>
             <Text style={styles.heartRateText}>{heartRate}</Text>
           </>
         ) : (
