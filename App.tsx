@@ -44,9 +44,8 @@ const App = () => {
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
-
             <PulseIndicator />
-            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>s
+            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
             <Text style={styles.heartRateText}>{heartRate}</Text>
           </>
         ) : (
