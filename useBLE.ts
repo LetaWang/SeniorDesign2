@@ -101,7 +101,7 @@ function useBLE(): BluetoothLowEnergyApi {
       await deviceConnection.discoverAllServicesAndCharacteristics();
       bleManager.stopDeviceScan();
       startStreamingData(deviceConnection);
-      sendData("27", deviceConnection);
+      sendData(27, deviceConnection);
     } catch (e) {
       console.log("FAILED TO CONNECT", e);
     }
@@ -154,7 +154,7 @@ function useBLE(): BluetoothLowEnergyApi {
   };
 
   const sendData = async (
-    data: string,
+    data: number,
     device: Device
     ) => {
     try {
