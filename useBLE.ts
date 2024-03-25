@@ -165,13 +165,14 @@ function useBLE(): BluetoothLowEnergyApi {
 //         const dataBytes = base64.encode(data);
         const dataBytes = data;
         const dataHex = data.toString(16);
+        const dataBytes = new Uint8Array([data]);
 
         // Use the writeCharacteristicWithResponse or writeCharacteristicWithoutResponse based on your requirement
-        await bleManager.writeCharacteristicWithResponseForDevice(
+        await bleManager.writeCharacteristicWithoutResponseForDevice(
           device.id,
           serviceUUID,
           characteristicUUID,
-          dataHex
+          dataBytes
         );
         console.log(`Data sent successfully: ${data}`);
     } catch (error) {
