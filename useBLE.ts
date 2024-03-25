@@ -163,7 +163,7 @@ function useBLE(): BluetoothLowEnergyApi {
 
         // Convert the string data to bytes if needed
 //         const dataBytes = base64.encode(data);
-        const dataBytes = data;
+//         const dataBytes = data;
         const dataHex = data.toString(16);
         const dataBytes = new Uint8Array([data]);
 
