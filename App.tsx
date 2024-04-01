@@ -9,65 +9,22 @@ import {
 import DeviceModal from "./DeviceConnectionModal";
 import { PulseIndicator } from "./PulseIndicator";
 import useBLE from "./useBLE";
+import Bluetooth from "./Screens/bluetooth/Bluetooth.tsx"
+import BottomNavBar from './Screens/BottomNavBar';
+import BottomToolbar from './Screens/BottomToolbar.js';
+
+const Home = () => <div>Home Page</div>;
 
 const App = () => {
-  const {
-    requestPermissions,
-    scanForPeripherals,
-    allDevices,
-    connectToDevice,
-    connectedDevice,
-    heartRate,
-    disconnectFromDevice,
-    sendData,
-  } = useBLE();
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  const scanForDevices = async () => {
-    const isPermissionsEnabled = await requestPermissions();
-    if (isPermissionsEnabled) {
-      scanForPeripherals();
-    }
-  };
-
-  const hideModal = () => {
-    setIsModalVisible(false);
-  };
-
-  const openModal = async () => {
-    scanForDevices();
-    setIsModalVisible(true);
-  };
+  const navItems = [
+    { label: 'Home', path: '/' },
+    { label: 'Bluetooth', path: '/bluetooth' },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.heartRateTitleWrapper}>
-        {connectedDevice ? (
-          <>
-            <PulseIndicator />
-            <Text style={styles.heartRateTitleText}>The UV Index is: </Text>
-            <Text style={styles.heartRateText}>{heartRate}</Text>
-          </>
-        ) : (
-          <Text style={styles.heartRateTitleText}>
-            UV Index
-          </Text>
-        )}
-      </View>
-      <TouchableOpacity
-        onPress={connectedDevice ? disconnectFromDevice : openModal}
-        style={styles.ctaButton}
-      >
-        <Text style={styles.ctaButtonText}>
-          {connectedDevice ? "Disconnect" : "Connect"}
-        </Text>
-      </TouchableOpacity>
-      <DeviceModal
-        closeModal={hideModal}
-        visible={isModalVisible}
-        connectToPeripheral={connectToDevice}
-        devices={allDevices}
-      />
+     <Bluetooth/>
+     <BottomToolbar pageName={'HomeScreen'}/>
     </SafeAreaView>
   );
 };
