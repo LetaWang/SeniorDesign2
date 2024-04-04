@@ -14,6 +14,7 @@ import BottomNavBar from './Screens/BottomNavBar';
 import BottomToolbar from './Screens/BottomToolbar.js';
 import Profile from './Screens/ProfileScreen.js';
 import UVIndex from './Screens/UVIndexScreen.js';
+import HomeScreen from './Screens/HomeScreen.js';
 
 const Home = () => (
   <View>
@@ -38,7 +39,7 @@ const App = () => {
   const renderSelectedScreen = () => {
     switch (selectedItem) {
       case 'HomeScreen':
-        return <Home />;
+        return <HomeScreen />;
       case 'Bluetooth':
         return <Bluetooth onHeartRateChange={handleHeartRateChange} />
       // Add cases for other screens as needed

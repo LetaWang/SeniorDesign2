@@ -41,11 +41,17 @@ const HomeScreenStyle = StyleSheet.create({
     },
     vitaminDBox: {
         width: '90%',
-        height: 300,
+        height: 'auto',
         marginLeft: '5%',
         marginTop: 20,
         backgroundColor: '#DADADA',
         borderRadius: 10,
+        paddingBottom: 30,
+        paddingTop: 30,
+        padding: 10,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     progress: {
         flex: 1,
@@ -55,9 +61,7 @@ const HomeScreenStyle = StyleSheet.create({
     vitaminDLevel1: {
         fontSize: 40,
         color: 'black',
-        position: 'absolute',
-        top: 90,
-        left: '30%',
+        marginTop: 20,
     },
     vitaminDLevel2: {
         fontSize: 40,
