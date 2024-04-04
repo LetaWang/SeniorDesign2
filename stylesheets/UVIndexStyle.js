@@ -39,7 +39,7 @@ const UVIndexStyle = StyleSheet.create({
     },
    UVInfoBox: {
         width: '90%',
-        height: 250,
+        height: 'auto',
         marginLeft: '5%',
         marginTop: 20,
         backgroundColor: '#DADADA',

@@ -23,6 +23,12 @@ const Home = () => (
 
 const App = () => {
   const [selectedItem, setSelectedItem] = useState("HomeScreen");
+    const [heartRate, setHeartRate] = useState(null); // State to store heart rate data
+
+    // Callback function to receive heart rate data from Bluetooth component
+    const handleHeartRateChange = (newHeartRate) => {
+        setHeartRate(newHeartRate);
+    };
 
   const handleItemSelected = (itemName) => {
     setSelectedItem(itemName);
@@ -34,12 +40,12 @@ const App = () => {
       case 'HomeScreen':
         return <Home />;
       case 'Bluetooth':
-        return <Bluetooth />;
+        return <Bluetooth onHeartRateChange={handleHeartRateChange} />
       // Add cases for other screens as needed
       case 'Profile':
         return <Profile />;
       case 'UVIndex':
-        return <UVIndex />;
+        return <UVIndex heartRate={heartRate}/>;
       default:
         return null; // Default case
     }

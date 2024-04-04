@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,7 +10,7 @@ import DeviceModal from "../../DeviceConnectionModal";
 import { PulseIndicator } from "../../PulseIndicator";
 import useBLE from "../../useBLE";
 
-const Bluetooth = () => {
+const Bluetooth = ( {onHeartRateChange} ) => {
   const {
     requestPermissions,
     scanForPeripherals,
@@ -22,6 +22,11 @@ const Bluetooth = () => {
     sendData,
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+    useEffect(() => {
+      // Pass heart rate data to parent component
+      onHeartRateChange(heartRate);
+    }, [heartRate]); // Triggered whenever heart rate changes
 
   const scanForDevices = async () => {
     const isPermissionsEnabled = await requestPermissions();
