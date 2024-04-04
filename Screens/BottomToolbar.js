@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, Image, Keyboard  } from 'react-native';
 
-const BottomToolbar = ({ navigation, pageName }) => {
+const BottomToolbar = ({ pageName, onItemSelected }) => {
   const [selectedItem, setSelectedItem] = useState(pageName);
+
+  const handlePress = (itemName) => {
+    setSelectedItem(itemName);
+    onItemSelected(itemName); // Notify parent component about the selected item
+  };
+ const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true); // Keyboard is now visible
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false); // Keyboard is now hidden
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  if (isKeyboardVisible) {
+    return null; // Return null to hide the toolbar when the keyboard is visible
+  }
 
   return (
     <View style={styles.toolbar}>
       <TouchableOpacity
         style={[styles.toolbarItem, selectedItem === 'HomeScreen' && styles.selectedItem]}
-        onPress={() => navigation.navigate('HomeScreen')}
+        onPress={() => handlePress("HomeScreen")}
       >
         <Image
           source={require('./assets/home-icon.png')}
@@ -21,7 +51,7 @@ const BottomToolbar = ({ navigation, pageName }) => {
           styles.toolbarItem,
           selectedItem === 'History' && styles.selectedItem,
         ]}
-        onPress={() => navigation.navigate('History')}
+        onPress={() => handlePress("History")}
       >
         <Image
           source={require('./assets/history-icon.png')}
@@ -34,7 +64,7 @@ const BottomToolbar = ({ navigation, pageName }) => {
           styles.toolbarItem,
           selectedItem === 'Bluetooth' && styles.selectedItem,
         ]}
-        onPress={() => navigation.navigate('Bluetooth')}
+        onPress={() => handlePress("Bluetooth")}
       >
         <Image
           source={require('./assets/bluetooth-icon.png')}
@@ -47,7 +77,7 @@ const BottomToolbar = ({ navigation, pageName }) => {
           styles.toolbarItem,
           selectedItem === 'UVIndex' && styles.selectedItem,
         ]}
-        onPress={() => navigation.navigate('UVIndex')}
+        onPress={() => handlePress("UVIndex")}
       >
         <Image
           source={require('./assets/uv-icon.png')}
@@ -60,7 +90,7 @@ const BottomToolbar = ({ navigation, pageName }) => {
           styles.toolbarItem,
           selectedItem === 'Profile' && styles.selectedItem,
         ]}
-        onPress={() => navigation.navigate('Profile')}
+        onPress={() => handlePress("Profile")}
       >
         <Image
           source={require('./assets/profile-icon.png')}

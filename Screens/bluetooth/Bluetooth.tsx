@@ -50,7 +50,7 @@ const Bluetooth = () => {
           </>
         ) : (
           <Text style={styles.heartRateTitleText}>
-            UV Index
+            Connect Device
           </Text>
         )}
       </View>
@@ -59,7 +59,7 @@ const Bluetooth = () => {
         style={styles.ctaButton}
       >
         <Text style={styles.ctaButtonText}>
-          {connectedDevice ? "Disconnect" : "Connect"}
+          {connectedDevice ? "Disconnect" : "Connect Device"}
         </Text>
       </TouchableOpacity>
       <DeviceModal
@@ -80,33 +80,29 @@ const styles = StyleSheet.create({
   },
   heartRateTitleWrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   heartRateTitleText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginHorizontal: 20,
-    color: "black",
+      marginTop: 20,
+      fontSize: 50,
+      marginLeft: 20,
   },
   heartRateText: {
     fontSize: 25,
     marginTop: 15,
   },
   ctaButton: {
-    backgroundColor: "#FF6060",
+    backgroundColor: "#C3E6FF",
     justifyContent: "center",
     alignItems: "center",
     height: 50,
     marginHorizontal: 20,
-    marginBottom: 5,
+    marginBottom: '145%',
     borderRadius: 8,
+    fontSize: 22,
   },
   ctaButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 22,
+    color: "black",
   },
 });
 

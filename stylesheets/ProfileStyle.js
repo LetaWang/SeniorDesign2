@@ -21,9 +21,25 @@ const ProfileStyle = StyleSheet.create({
     color: 'black',
     marginBottom: 10,
   },
+  inputText: {
+    fontSize: 22,
+    color: 'black',
+    marginTop: 10,
+    backgroundColor: 'white',
+    padding: 6,
+    borderRadius: 4,
+    marginTop: -6,
+  },
+    informationRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContentL: 'center',
+        paddingTop: 5,
+    },
   image: {
     height: 100,
     width: 100,
+    marginBottom: 10,
   },
   image2: {
     height: 40,

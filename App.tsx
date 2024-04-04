@@ -12,19 +12,42 @@ import useBLE from "./useBLE";
 import Bluetooth from "./Screens/bluetooth/Bluetooth.tsx"
 import BottomNavBar from './Screens/BottomNavBar';
 import BottomToolbar from './Screens/BottomToolbar.js';
+import Profile from './Screens/ProfileScreen.js';
+import UVIndex from './Screens/UVIndexScreen.js';
 
-const Home = () => <div>Home Page</div>;
+const Home = () => (
+  <View>
+    <Text>Home Page</Text>
+  </View>
+);
 
 const App = () => {
-  const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Bluetooth', path: '/bluetooth' },
-  ];
+  const [selectedItem, setSelectedItem] = useState("HomeScreen");
 
+  const handleItemSelected = (itemName) => {
+    setSelectedItem(itemName);
+    console.log("Selected item:", itemName);
+  };
+
+  const renderSelectedScreen = () => {
+    switch (selectedItem) {
+      case 'HomeScreen':
+        return <Home />;
+      case 'Bluetooth':
+        return <Bluetooth />;
+      // Add cases for other screens as needed
+      case 'Profile':
+        return <Profile />;
+      case 'UVIndex':
+        return <UVIndex />;
+      default:
+        return null; // Default case
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
-     <Bluetooth/>
-     <BottomToolbar pageName={'HomeScreen'}/>
+      {renderSelectedScreen()}
+     <BottomToolbar pageName={'HomeScreen'} onItemSelected={handleItemSelected}/>
     </SafeAreaView>
   );
 };
