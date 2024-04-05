@@ -7,7 +7,9 @@ import ProgressBar from './ProgressBar';
 const HomeScreen = () => {
     const [date, setDate] = useState('Today, Dec. 8th');
     const [name, setName] = useState("");
-    const [progress, setProgress] = useState(25);
+    const [progress, setProgress] = useState(0);
+    const [vitaminDNeeded, setVitaminDNeeded] = useState(0);
+    const [vitaminDReceived, setVitaminDReceived] = useState(0);
 
      async function readFromTextFile() {
             const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
@@ -17,6 +19,7 @@ const HomeScreen = () => {
 
                 const myArray = content.split(" ");
                 setName(myArray[1]);
+                setVitaminDNeeded(parseInt(myArray[6]) * 27);
 
                 console.log('File content:', content);
             } catch (error) {
@@ -25,8 +28,16 @@ const HomeScreen = () => {
         }
 
     useEffect(() => {
+//        setProgress(0);
         readFromTextFile();
+//        setProgress(vitaminDReceived/vitaminDNeeded * 100);
     }, []);
+
+    useEffect(() => {
+        if (vitaminDNeeded != 0){
+            setProgress(vitaminDReceived/vitaminDNeeded * 100);
+        }
+    }, [vitaminDReceived, vitaminDNeeded]);
 
     const leftPress = () => {
 //      Alert.alert('Button Pressed');
@@ -78,7 +89,7 @@ const HomeScreen = () => {
     </View>
     <View style={HomeScreenStyle.vitaminDBox}>
         <ProgressBar progress={progress} />
-        <Text style={HomeScreenStyle.vitaminDLevel1}>78/100 nmol/L</Text>
+        <Text style={HomeScreenStyle.vitaminDLevel1}>{vitaminDReceived}/{vitaminDNeeded} IU</Text>
     </View>
     <View style={HomeScreenStyle.sessionsBox}>
         <Text style={HomeScreenStyle.boxText}>Tracked Sessions</Text>
