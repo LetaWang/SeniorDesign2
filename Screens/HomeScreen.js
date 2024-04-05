@@ -4,7 +4,7 @@ import HomeScreenStyle from '../stylesheets/HomeScreenStyle.js'; // Import the s
 import * as FileSystem from 'expo-file-system';
 import ProgressBar from './ProgressBar';
 
-const HomeScreen = () => {
+const HomeScreen = ({vitaminD}) => {
     const [date, setDate] = useState('Today, Dec. 8th');
     const [name, setName] = useState("");
     const [progress, setProgress] = useState(0);
@@ -29,6 +29,7 @@ const HomeScreen = () => {
 
     useEffect(() => {
 //        setProgress(0);
+        setVitaminDReceived(vitaminD);
         readFromTextFile();
 //        setProgress(vitaminDReceived/vitaminDNeeded * 100);
     }, []);

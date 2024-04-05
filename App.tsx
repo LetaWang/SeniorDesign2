@@ -20,10 +20,12 @@ import History from './Screens/HistoryScreen.js';
 const App = () => {
   const [selectedItem, setSelectedItem] = useState("HomeScreen");
     const [heartRate, setHeartRate] = useState(null); // State to store heart rate data
+    const [vitaminD, setVitaminD] = useState(null); // State to store heart rate data
 
     // Callback function to receive heart rate data from Bluetooth component
-    const handleHeartRateChange = (newHeartRate) => {
+    const handleHeartRateChange = (newHeartRate, newVitaminD) => {
         setHeartRate(newHeartRate);
+        setVitaminD(newVitaminD);
     };
 
   const handleItemSelected = (itemName) => {
@@ -34,7 +36,7 @@ const App = () => {
   const renderSelectedScreen = () => {
     switch (selectedItem) {
       case 'HomeScreen':
-        return <HomeScreen />;
+        return <HomeScreen vitaminD={vitaminD}/>;
       case 'Bluetooth':
         return <Bluetooth onHeartRateChange={handleHeartRateChange} />
       // Add cases for other screens as needed

@@ -9,6 +9,8 @@ import {
 import DeviceModal from "../../DeviceConnectionModal";
 import { PulseIndicator } from "../../PulseIndicator";
 import useBLE from "../../useBLE";
+import EndOfDayTask from './EndOfDayTask';
+import * as FileSystem from 'expo-file-system';
 
 const Bluetooth = ( {onHeartRateChange} ) => {
   const {
@@ -22,11 +24,96 @@ const Bluetooth = ( {onHeartRateChange} ) => {
     sendData,
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [vitaminD, setVitaminD] = useState(0);
+  const [skinType, setSkinType] = useState('');
+  const [age, setAge] = useState('');
+
 
     useEffect(() => {
       // Pass heart rate data to parent component
-      onHeartRateChange(heartRate);
+      onHeartRateChange(heartRate, vitaminD);
+
+    // Trigger an action every minute
+    const interval = setInterval(() => {
+      // Call the function you want to trigger every minute here
+      console.log('This function will be called every minute');
+
+      // this is where the vitamin D calculations should go
+      if (heartRate > 0) {
+        const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
+
+         try {
+             const content = FileSystem.readAsStringAsync(fileUri);
+
+             const myArray = content.split(" ");
+             setAge(myArray[3]);
+             setSkinType(myArray[7]);
+
+             console.log('File content:', content);
+         } catch (error) {
+             console.error('Error reading file:', error);
+         }
+         var STF = 1;
+        if (skinType == '2'){
+            STF = 3.2/3;
+        } else if (skinType == '3') {
+            STF = 3.2/4;
+        } else if (skinType == '4') {
+            STF = 3.2/5.25;
+        } else if (skinType == '5') {
+             STF = 3.2/7.5;
+         }
+
+         var AF = 1;
+
+        if (parseInt(age) < 21){
+            AF = 1;
+        } else if (parseInt(age) < 41) {
+            AF = 0.83;
+        } else if (parseInt(age) < 59) {
+            AF = 0.66;
+        } else {
+            AF = 0.49;
+         }
+
+        var SED =( heartRate / (40/24/60)) * 1;
+        const ASCF = 1.049;
+        const GCF = 0.417;
+        var VDD = SED * ASCF * GCF
+
+        setVitaminD(VDD * ((4861/24/60) / SED) * STF * 0.5 * AF)
+      }
+
+    }, 60000); // 60000 milliseconds = 1 minute
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(interval);
+
+
     }, [heartRate]); // Triggered whenever heart rate changes
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString(); // Adding 1 because getMonth() returns zero-based month
+    const day = currentDate.getDate().toString();
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${month}/${day}/${year}`;
+
+  const endOfDayFunction = () => {
+        const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
+
+        try {
+            var content = FileSystem.readAsStringAsync(fileUri);
+            content = formattedDate + " - " + vitaminD + ";" + content;
+            FileSystem.writeAsStringAsync(fileUri, content);
+            console.log('File written successfully.');
+        } catch (error) {
+            console.error('Error writing file:', error);
+        }
+
+
+    console.log('End of the day!');
+  };
 
   const scanForDevices = async () => {
     const isPermissionsEnabled = await requestPermissions();
@@ -46,6 +133,7 @@ const Bluetooth = ( {onHeartRateChange} ) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <EndOfDayTask endOfDayFunction={endOfDayFunction} />
       <View style={styles.heartRateTitleWrapper}>
         {connectedDevice ? (
           <>
