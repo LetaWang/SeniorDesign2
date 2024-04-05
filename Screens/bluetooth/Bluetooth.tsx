@@ -7,12 +7,12 @@ import {
   View,
 } from "react-native";
 import DeviceModal from "../../DeviceConnectionModal";
-import { PulseIndicator } from "../../PulseIndicator";
 import useBLE from "../../useBLE";
 import EndOfDayTask from './EndOfDayTask';
 import * as FileSystem from 'expo-file-system';
+import BottomToolbar from './Screens/BottomToolbar.js';
 
-const Bluetooth = ( {onHeartRateChange} ) => {
+const Bluetooth = ( {} ) => {
   const {
     requestPermissions,
     scanForPeripherals,
@@ -23,15 +23,21 @@ const Bluetooth = ( {onHeartRateChange} ) => {
     disconnectFromDevice,
     sendData,
   } = useBLE();
+
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [vitaminD, setVitaminD] = useState(0);
   const [skinType, setSkinType] = useState('');
   const [age, setAge] = useState('');
+  const [selectedItem, setSelectedItem] = useState("HomeScreen");
 
+  const handleItemSelected = (itemName) => {
+    setSelectedItem(itemName);
+    console.log("Selected item:", itemName);
+  };
 
     useEffect(() => {
       // Pass heart rate data to parent component
-      onHeartRateChange(heartRate, vitaminD);
+      // onHeartRateChange(heartRate, vitaminD);
 
     // Trigger an action every minute
     const interval = setInterval(() => {
@@ -140,8 +146,8 @@ const Bluetooth = ( {onHeartRateChange} ) => {
               <Text style={styles.heartRateTitleText}>
                 Connect Device
               </Text>
-            <Text style={styles.heartRateTitleText}>Device Connected</Text>
-            <Text style={styles.heartRateText}>{connectedDevice.id}</Text>
+            <Text style={styles.heartRateText2}>Device Connected</Text>
+            <Text style={styles.heartRateText}>{connectedDevice.name}</Text>
           </>
         ) : (
           <Text style={styles.heartRateTitleText}>
@@ -163,6 +169,7 @@ const Bluetooth = ( {onHeartRateChange} ) => {
         connectToPeripheral={connectToDevice}
         devices={allDevices}
       />
+    <BottomToolbar pageName={'Bluetooth'} onItemSelected={handleItemSelected}/>
     </SafeAreaView>
   );
 };
@@ -184,6 +191,12 @@ const styles = StyleSheet.create({
   heartRateText: {
     fontSize: 25,
     marginTop: 15,
+    marginLeft: 20,
+  },
+  heartRateText2: {
+    fontSize: 25,
+    marginTop: 100,
+    marginLeft: 20,
   },
   ctaButton: {
     backgroundColor: "#C3E6FF",
@@ -191,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 50,
     marginHorizontal: 20,
-    marginBottom: '145%',
+    marginBottom: '100%',
     borderRadius: 8,
     fontSize: 22,
   },

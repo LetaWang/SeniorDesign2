@@ -70,7 +70,7 @@ const labels = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
     useEffect(() => {
 //        setProgress(0);
-//        writeFile();
+    //    writeFile();
     readFromTextFile();
 //        setProgress(vitaminDReceived/vitaminDNeeded * 100);
     }, []);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,53 +7,218 @@ import {
   View,
 } from "react-native";
 import DeviceModal from "./DeviceConnectionModal";
-import { PulseIndicator } from "./PulseIndicator";
 import useBLE from "./useBLE";
-import Bluetooth from "./Screens/bluetooth/Bluetooth.tsx"
-import BottomNavBar from './Screens/BottomNavBar';
+import EndOfDayTask from './Screens/bluetooth/EndOfDayTask';
+import * as FileSystem from 'expo-file-system';
 import BottomToolbar from './Screens/BottomToolbar.js';
+
 import Profile from './Screens/ProfileScreen.js';
 import UVIndex from './Screens/UVIndexScreen.js';
 import HomeScreen from './Screens/HomeScreen.js';
 import History from './Screens/HistoryScreen.js';
 
-const App = () => {
-  const [selectedItem, setSelectedItem] = useState("HomeScreen");
-    const [heartRate, setHeartRate] = useState(null); // State to store heart rate data
-    const [vitaminD, setVitaminD] = useState(null); // State to store heart rate data
+const Bluetooth = ( {} ) => {
+  const {
+    requestPermissions,
+    scanForPeripherals,
+    allDevices,
+    connectToDevice,
+    connectedDevice,
+    heartRate,
+    disconnectFromDevice,
+    sendData,
+  } = useBLE();
 
-    // Callback function to receive heart rate data from Bluetooth component
-    const handleHeartRateChange = (newHeartRate, newVitaminD) => {
-        setHeartRate(newHeartRate);
-        setVitaminD(newVitaminD);
-    };
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [vitaminD, setVitaminD] = useState(0);
+  const [skinType, setSkinType] = useState('');
+  const [age, setAge] = useState('');
+  const [selectedItem, setSelectedItem] = useState("HomeScreen");
 
   const handleItemSelected = (itemName) => {
     setSelectedItem(itemName);
     console.log("Selected item:", itemName);
   };
 
-  const renderSelectedScreen = () => {
-    switch (selectedItem) {
-      case 'HomeScreen':
-        return <HomeScreen vitaminD={vitaminD}/>;
-      case 'Bluetooth':
-        return <Bluetooth onHeartRateChange={handleHeartRateChange} />
-      // Add cases for other screens as needed
-      case 'Profile':
-        return <Profile />;
-      case 'UVIndex':
-        return <UVIndex heartRate={heartRate}/>;
-      case 'History':
-        return <History />;
-      default:
-        return null; // Default case
+    useEffect(() => {
+      // Pass heart rate data to parent component
+      // onHeartRateChange(heartRate, vitaminD);
+
+    // Trigger an action every minute
+    const interval = setInterval(async () => {
+      // Call the function you want to trigger every minute here
+      console.log('This function will be called every minute');
+
+      // this is where the vitamin D calculations should go
+      if (heartRate > 0) {
+        const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
+
+         try {
+             const content = await FileSystem.readAsStringAsync(fileUri);
+
+             const myArray = content.split(" ");
+             setAge(myArray[3]);
+             setSkinType(myArray[7]);
+
+             console.log('File content:', content);
+         } catch (error) {
+             console.error('Error reading file:', error);
+         }
+         var STF = 1;
+        if (skinType == '2'){
+            STF = 3.2/3;
+        } else if (skinType == '3') {
+            STF = 3.2/4;
+        } else if (skinType == '4') {
+            STF = 3.2/5.25;
+        } else if (skinType == '5') {
+             STF = 3.2/7.5;
+         }
+
+         var AF = 1;
+
+        if (parseInt(age) < 21){
+            AF = 1;
+        } else if (parseInt(age) < 41) {
+            AF = 0.83;
+        } else if (parseInt(age) < 59) {
+            AF = 0.66;
+        } else {
+            AF = 0.49;
+         }
+
+        var SED =( heartRate / (40/24/60)) * 1;
+        const ASCF = 1.049;
+        const GCF = 0.417;
+        var VDD = SED * ASCF * GCF;
+
+        console.log(vitaminD);
+        
+        var help = (parseFloat(vitaminD) + VDD * ((4861/24/60) / SED) * STF * 0.5 * AF).toFixed(2);
+        
+        setVitaminD(help);
+      }
+
+    }, 1000); // 60000 milliseconds = 1 minute
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(interval);
+
+
+    }, [heartRate]); // Triggered whenever heart rate changes
+
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString(); // Adding 1 because getMonth() returns zero-based month
+    const day = currentDate.getDate().toString();
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${month}/${day}/${year}`;
+
+  const endOfDayFunction = () => {
+        const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
+
+        try {
+            var content = FileSystem.readAsStringAsync(fileUri);
+            content = formattedDate + " - " + vitaminD + ";" + content;
+            FileSystem.writeAsStringAsync(fileUri, content);
+            console.log('File written successfully.');
+        } catch (error) {
+            console.error('Error writing file:', error);
+        }
+
+
+    console.log('End of the day!');
+  };
+
+  const scanForDevices = async () => {
+    const isPermissionsEnabled = await requestPermissions();
+    if (isPermissionsEnabled) {
+      scanForPeripherals();
     }
   };
+
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const openModal = async () => {
+    scanForDevices();
+    setIsModalVisible(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {renderSelectedScreen()}
-     <BottomToolbar pageName={'HomeScreen'} onItemSelected={handleItemSelected}/>
+      <EndOfDayTask endOfDayFunction={endOfDayFunction} />
+        {selectedItem == "Bluetooth" ? (
+          <>
+        <View style={styles.heartRateTitleWrapper}>
+        {connectedDevice ? (
+          <>
+              <Text style={styles.heartRateTitleText}>
+                Connect Device
+              </Text>
+            <Text style={styles.heartRateText2}>Device Connected</Text>
+            <Text style={styles.heartRateText}>{connectedDevice.name}</Text>
+          </>
+        ) : (
+          <Text style={styles.heartRateTitleText}>
+            Connect Device
+          </Text>
+        )}
+      </View>
+      <TouchableOpacity
+        onPress={connectedDevice ? disconnectFromDevice : openModal}
+        style={styles.ctaButton}
+      >
+        <Text style={styles.ctaButtonText}>
+          {connectedDevice ? "Disconnect" : "Connect Device"}
+        </Text>
+      </TouchableOpacity>
+      <DeviceModal
+        closeModal={hideModal}
+        visible={isModalVisible}
+        connectToPeripheral={connectToDevice}
+        devices={allDevices}
+      />
+          </>
+      
+        ) : (
+          <></>
+        )}
+        {selectedItem == "UVIndex" ? (
+          <>
+            <UVIndex heartRate={heartRate}/>
+          </>
+      
+        ) : (
+          <></>
+        )}
+        {selectedItem == "HomeScreen" ? (
+          <>
+            <HomeScreen vitaminD={vitaminD}/>
+          </>
+      
+        ) : (
+          <></>
+        )}
+        {selectedItem == "Profile" ? (
+          <>
+            <Profile />
+          </>
+      
+        ) : (
+          <></>
+        )}
+        {selectedItem == "History" ? (
+          <>
+            <History />
+          </>
+      
+        ) : (
+          <></>
+        )}
+      
+      <BottomToolbar pageName={'Homescreen'} onItemSelected={handleItemSelected}/>
     </SafeAreaView>
   );
 };
@@ -65,34 +230,36 @@ const styles = StyleSheet.create({
   },
   heartRateTitleWrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   heartRateTitleText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginHorizontal: 20,
-    color: "black",
+      marginTop: 20,
+      fontSize: 50,
+      marginLeft: 20,
   },
   heartRateText: {
     fontSize: 25,
     marginTop: 15,
+    marginLeft: 20,
+  },
+  heartRateText2: {
+    fontSize: 25,
+    marginTop: 100,
+    marginLeft: 20,
   },
   ctaButton: {
-    backgroundColor: "#FF6060",
+    backgroundColor: "#C3E6FF",
     justifyContent: "center",
     alignItems: "center",
     height: 50,
     marginHorizontal: 20,
-    marginBottom: 5,
+    marginBottom: '115%',
     borderRadius: 8,
+    fontSize: 22,
   },
   ctaButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 22,
+    color: "black",
   },
 });
 
-export default App;
+export default Bluetooth;

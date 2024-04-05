@@ -19,6 +19,7 @@ const Profile = ({}) => {
     const writeFile = async () => {
         const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
         const contentToWrite = `${yearJoined} ${fullName} ${age} ${gender} ${height} ${weight} ${skinType}`;
+        // const contentToWrite = '2023 John Doe 30 male 6\'2" 170 3';
 
         try {
             await FileSystem.writeAsStringAsync(fileUri, contentToWrite);
@@ -56,6 +57,7 @@ const Profile = ({}) => {
     };
 
     useEffect(() => {
+        // writeFile();
         readFromTextFile();
     }, []);
 

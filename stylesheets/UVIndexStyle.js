@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 const UVIndexStyle = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 80,
   },
   text: {
     fontSize: 20,
@@ -17,7 +18,7 @@ const UVIndexStyle = StyleSheet.create({
       },
    UVIndexBox: {
         width: '90%',
-        height: 150,
+        height: 120,
         marginLeft: '5%',
         marginTop: 40,
         backgroundColor: '#DADADA',
@@ -34,7 +35,7 @@ const UVIndexStyle = StyleSheet.create({
          color: 'black',
     },
     secondaryText: {
-        fontSize: 40,
+        fontSize: 30,
          color: 'black',
     },
    UVInfoBox: {
@@ -51,7 +52,7 @@ const UVIndexStyle = StyleSheet.create({
          color: 'black',
     },
     UVInfoText: {
-        fontSize: 22,
+        fontSize: 20,
          color: 'black',
          marginTop: 5,
     },

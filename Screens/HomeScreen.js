@@ -94,9 +94,6 @@ const HomeScreen = ({vitaminD}) => {
     </View>
     <View style={HomeScreenStyle.sessionsBox}>
         <Text style={HomeScreenStyle.boxText}>Tracked Sessions</Text>
-        <Text style={HomeScreenStyle.boxTextSmall}>8:34am - 9:31am      36 nmol/L</Text>
-        <Text style={HomeScreenStyle.boxTextSmall}>2:56pm - 4:42pm      52 nmol/L</Text>
-        <Text style={HomeScreenStyle.boxTextSmall}>6:26am - 8:13am      34 nmol/L</Text>
     </View>
       </ScrollView>
     </SafeAreaView>

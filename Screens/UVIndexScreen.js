@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ScrollView } from 'react-native';
 import UVIndexStyle from '../stylesheets/UVIndexStyle.js'; // Import the stylesheet
 
 const UVIndex = ({heartRate}) => {
@@ -14,7 +14,7 @@ const UVIndex = ({heartRate}) => {
             setLongDescription('Low danger from the sun\'s UV rays for the average person. Wear sunglasses on bright days. If you burn easily, cover up and use broad spectrum SPF 30+ sunscreen. Watch out for bright surfaces, like sand, water and snow, which reflect UV and increase exposure.');
         } else if (heartRate <= 5) {
             setShortDescription('Moderate UV');
-            setLongDescription('Moderate risk of harm from unprotected sun exposure. Stay in shade near midday when the sun is strongest. If outdoors, wear protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Watch out for bright surfaces, like sand, water and snow, which reflect UV and increase exposure.');
+            setLongDescription('Moderate risk of harm from unprotected sun exposure. Stay in shade near midday when the sun is strongest. If outdoors, wear protective clothing and UV-blocking sunglasses. Generously apply broad SPF 30+ sunscreen every 2 hours, even on cloudy days. Watch out for bright surfaces, like sand, water and snow, which reflect UV and increase exposure.');
         } else if (heartRate <= 7) {
             setShortDescription('High UV');
             setLongDescription('High risk of harm from unprotected sun exposure. Protection against skin and eye damage is needed. Reduce time in the sun between 10 a.m. and 4 p.m. If outdoors, seek shade and wear protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Watch out for bright surfaces, like sand, water and snow, which reflect UV and increase exposure.');
@@ -29,7 +29,8 @@ const UVIndex = ({heartRate}) => {
 
   return (
     <View style={UVIndexStyle.container}>
-        <Text style={UVIndexStyle.title}>UV Index</Text>
+    <ScrollView>
+    <Text style={UVIndexStyle.title}>UV Index</Text>
          <View style={UVIndexStyle.UVIndexBox}>
              <View style={UVIndexStyle.UVFormat}>
                  <Text style={UVIndexStyle.mainText}>{heartRate}</Text>
@@ -40,6 +41,8 @@ const UVIndex = ({heartRate}) => {
             <Text style={UVIndexStyle.UVInfoTitleText}>{shortDescription}</Text>
             <Text style={UVIndexStyle.UVInfoText}>{longDescription}</Text>
          </View>
+    </ScrollView>
+
     </View>
   );
 };
