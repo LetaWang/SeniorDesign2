@@ -15,12 +15,7 @@ import BottomToolbar from './Screens/BottomToolbar.js';
 import Profile from './Screens/ProfileScreen.js';
 import UVIndex from './Screens/UVIndexScreen.js';
 import HomeScreen from './Screens/HomeScreen.js';
-
-const Home = () => (
-  <View>
-    <Text>Home Page</Text>
-  </View>
-);
+import History from './Screens/HistoryScreen.js';
 
 const App = () => {
   const [selectedItem, setSelectedItem] = useState("HomeScreen");
@@ -47,6 +42,8 @@ const App = () => {
         return <Profile />;
       case 'UVIndex':
         return <UVIndex heartRate={heartRate}/>;
+      case 'History':
+        return <History />;
       default:
         return null; // Default case
     }

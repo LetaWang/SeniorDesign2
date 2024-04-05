@@ -18,11 +18,27 @@ const HistoryStyle = StyleSheet.create({
     },
     barGraphBox: {
         width: '90%',
-        height: 350,
+        height: 'auto',
+        marginLeft: '5%',
+        marginTop: 20,
+        backgroundColor: '#DADADA',
+        borderRadius: 10,
+    },
+    goalBox: {
+        width: '90%',
+        height: 'auto',
         marginLeft: '5%',
         marginTop: 50,
         backgroundColor: '#DADADA',
         borderRadius: 10,
+        padding: 15,
+    },
+    historyText: {
+        fontSize: 30,
+        color: 'black',
+        marginTop: 10,
+        marginLeft: 20,
+        lineHeight: 45,
     },
     avgBox: {
         width: '90%',
