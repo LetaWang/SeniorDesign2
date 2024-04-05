@@ -40,6 +40,36 @@ const Bluetooth = ( {} ) => {
     console.log("Selected item:", itemName);
   };
 
+  const writeFile = async () => {
+    const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
+    // const contentToWrite = `${yearJoined} ${fullName} ${age} ${gender} ${height} ${weight} ${skinType}`;
+    const contentToWrite = '2023 John Doe 30 male 6\'2" 170 3';
+
+    try {
+        await FileSystem.writeAsStringAsync(fileUri, contentToWrite);
+        console.log('File written successfully.');
+    } catch (error) {
+        console.error('Error writing file:', error);
+    }
+};
+
+const writeFile2 = async () => {
+  const fileUri = FileSystem.documentDirectory + 'history.txt';
+  const contentToWrite = '4/3/2024 - 3182;4/2/2024 - 1986;4/1/2024 - 2017';
+
+  try {
+      await FileSystem.writeAsStringAsync(fileUri, contentToWrite);
+      console.log('File written successfully.');
+  } catch (error) {
+      console.error('Error writing file:', error);
+  }
+};
+
+  useEffect(() => {
+    writeFile();
+    writeFile2();
+  }, []);
+
     useEffect(() => {
       // Pass heart rate data to parent component
       // onHeartRateChange(heartRate, vitaminD);
@@ -95,7 +125,7 @@ const Bluetooth = ( {} ) => {
         console.log(vitaminD);
         
         var help = (parseFloat(vitaminD) + VDD * ((4861/24/60) / SED) * STF * 0.5 * AF).toFixed(2);
-        
+
         setVitaminD(help);
       }
 
@@ -119,14 +149,12 @@ const Bluetooth = ( {} ) => {
 
         try {
             var content = FileSystem.readAsStringAsync(fileUri);
-            content = formattedDate + " - " + vitaminD + ";" + content;
-            FileSystem.writeAsStringAsync(fileUri, content);
+            var newContent = formattedDate + " - " + vitaminD + ";" + content;
+            FileSystem.writeAsStringAsync(fileUri, newContent);
             console.log('File written successfully.');
         } catch (error) {
             console.error('Error writing file:', error);
         }
-
-
     console.log('End of the day!');
   };
 
