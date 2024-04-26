@@ -113,6 +113,7 @@ function useBLE(): BluetoothLowEnergyApi {
       setHeartRate(0);
     }
   };
+
   const onHeartRateUpdate = (
     error: BleError | null,
     characteristic: Characteristic | null
@@ -124,17 +125,6 @@ function useBLE(): BluetoothLowEnergyApi {
       console.log("No Data was recieved");
       return -1;
     }
-    // This is where i need to update
-//     const rawData = base64.decode(characteristic.value);
-//     let innerHeartRate: number = +rawData;
-    // const firstBitValue: number = Number(rawData) & 0x01;
-    // if (firstBitValue === 0) {
-    //   innerHeartRate = rawData[1].charCodeAt(0);
-    // } else {
-    //   innerHeartRate =
-    //     Number(rawData[1].charCodeAt(0) << 8) +
-    //     Number(rawData[2].charCodeAt(2));
-    // }
     const raw = base64.decode(characteristic.value); // convert base64 to raw binary data held in a string
         let hexString = "";
         for (let i = 0; i < raw.length; i++) { // convert base64 to hex string
@@ -168,13 +158,13 @@ function useBLE(): BluetoothLowEnergyApi {
 //         const dataBytes = new Uint8Array([data]);
 
         // Use the writeCharacteristicWithResponse or writeCharacteristicWithoutResponse based on your requirement
-        await bleManager.writeCharacteristicWithoutResponseForDevice(
+        await bleManager.writeCharacteristicWithResponseForDevice(
           device.id,
           serviceUUID,
           characteristicUUID,
           dataBytes
         );
-        console.log(`Data sent successfully: ${data}`);
+        console.log(`Data sent successfully: ${dataBytes}`);
     } catch (error) {
       console.error("Failed to send data:", error);
     }

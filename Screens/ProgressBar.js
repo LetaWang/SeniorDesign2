@@ -13,15 +13,15 @@ const styles = StyleSheet.create({
   container: {
     height: 20,
     width: '100%',
-    backgroundColor: '#aeaeae',
+    backgroundColor: '#C1DF91',
     borderRadius: 10,
     overflow: 'hidden',
     borderWidth: 1, // Add border width
-    borderColor: '#ccc', // Add border color
+    borderColor: 'black', // Add border color
   },
   progressBar: {
     height: '100%',
-    backgroundColor: '#BD0000',
+    backgroundColor: '#96AD71',
     borderRadius: 10,
   },
 });

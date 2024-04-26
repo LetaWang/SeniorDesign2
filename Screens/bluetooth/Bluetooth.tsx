@@ -87,7 +87,7 @@ const Bluetooth = ( {} ) => {
         const GCF = 0.417;
         var VDD = SED * ASCF * GCF
 
-        setVitaminD(VDD * ((4861/24/60) / SED) * STF * 0.5 * AF)
+        setVitaminD(vitaminD + VDD * ((4861/24/60) / SED) * STF * 0.5 * AF)
       }
 
     }, 60000); // 60000 milliseconds = 1 minute

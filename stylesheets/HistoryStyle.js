@@ -18,10 +18,10 @@ const HistoryStyle = StyleSheet.create({
     },
     barGraphBox: {
         width: '90%',
-        height: 'auto',
+        height: 250,
         marginLeft: '5%',
         marginTop: 20,
-        backgroundColor: '#DADADA',
+        backgroundColor: '#EBFFD2',
         borderRadius: 10,
     },
     goalBox: {
@@ -29,7 +29,7 @@ const HistoryStyle = StyleSheet.create({
         height: 'auto',
         marginLeft: '5%',
         marginTop: 50,
-        backgroundColor: '#DADADA',
+        backgroundColor: '#EBFFD2',
         borderRadius: 10,
         padding: 15,
     },
@@ -45,7 +45,7 @@ const HistoryStyle = StyleSheet.create({
         height: 150,
         marginLeft: '5%',
         marginTop: 20,
-        backgroundColor: '#DADADA',
+        backgroundColor: '#EBFFD2',
         borderRadius: 10,
         padding: 10,
         marginBottom: 100,
@@ -55,6 +55,19 @@ const HistoryStyle = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    dropdownButton: {
+        backgroundColor: '#EBFFD2',
+        width: 150,
+        marginTop: 35,
+        marginLeft: '5%',
+        borderRadius: 10,
+        marginBottom: -30,
+        padding: 5,
+        paddingLeft: 10,
+    },
+    dropdownButtonText: {
+        fontSize:20,
+    }
 });
 
 export default HistoryStyle;

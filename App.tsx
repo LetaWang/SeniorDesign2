@@ -74,12 +74,7 @@ const writeFile2 = async () => {
       // Pass heart rate data to parent component
       // onHeartRateChange(heartRate, vitaminD);
 
-    // Trigger an action every minute
     const interval = setInterval(async () => {
-      // Call the function you want to trigger every minute here
-      console.log('This function will be called every minute');
-
-      // this is where the vitamin D calculations should go
       if (heartRate > 0) {
         const fileUri = FileSystem.documentDirectory + 'myTextFile.txt';
 
@@ -94,7 +89,7 @@ const writeFile2 = async () => {
          } catch (error) {
              console.error('Error reading file:', error);
          }
-         var STF = 1;
+        var STF = 1;
         if (skinType == '2'){
             STF = 3.2/3;
         } else if (skinType == '3') {
@@ -103,9 +98,9 @@ const writeFile2 = async () => {
             STF = 3.2/5.25;
         } else if (skinType == '5') {
              STF = 3.2/7.5;
-         }
+        }
 
-         var AF = 1;
+        var AF = 1;
 
         if (parseInt(age) < 21){
             AF = 1;
@@ -117,19 +112,19 @@ const writeFile2 = async () => {
             AF = 0.49;
          }
 
-        var SED =( heartRate / (40/24/60)) * 1;
+        var SED =((heartRate * 60)/40) / 100;
         const ASCF = 1.049;
         const GCF = 0.417;
         var VDD = SED * ASCF * GCF;
 
         console.log(vitaminD);
         
-        var help = (parseFloat(vitaminD) + VDD * ((4861/24/60) / SED) * STF * 0.5 * AF).toFixed(2);
+        var newValue = (parseFloat(vitaminD) + VDD * (4861) * STF * 0.5 * AF).toFixed(2);
 
-        setVitaminD(help);
+        setVitaminD(newValue);
       }
 
-    }, 1000); // 60000 milliseconds = 1 minute
+    }, 60000); // 60000 milliseconds = 1 minute
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(interval);
@@ -254,7 +249,7 @@ const writeFile2 = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#DAF7A6",
   },
   heartRateTitleWrapper: {
     flex: 1,
@@ -275,7 +270,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   ctaButton: {
-    backgroundColor: "#C3E6FF",
+    backgroundColor: "#98B26F",
     justifyContent: "center",
     alignItems: "center",
     height: 50,

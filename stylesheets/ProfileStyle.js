@@ -67,7 +67,7 @@ const ProfileStyle = StyleSheet.create({
         height: 'auto',
         minHeight: 200,
         marginTop: 20,
-        backgroundColor: '#DADADA',
+        backgroundColor: '#EBFFD2',
         borderRadius: 10,
         marginBottom: 100,
         padding: 10,

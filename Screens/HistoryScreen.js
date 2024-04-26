@@ -1,14 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, SafeAreaView, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, ScrollView, Picker } from 'react-native';
 import HistoryStyle from '../stylesheets/HistoryStyle.js'; // Import the
 import * as FileSystem from 'expo-file-system';
+import BarGraph from './BarGraph';
 
 const History = ({ }) => {
-const labels = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+
+    function calculateAverage(list) {
+        // Check if the list is empty
+        if (list.length === 0) {
+            return 0; // Return 0 for an empty list
+        }
+    
+        // Calculate the sum of all elements in the list
+        const sum = list.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    
+        // Calculate the average
+        const average = sum / list.length;
+    
+        // Round the average to the nearest whole number
+        const roundedAverage = Math.round(average);
+
+        return roundedAverage;
+    }
+    
+    const labels = ['4/22', '4/23', '4/24', '4/25', '4/26', '4/27', '4/28'];
     const data = [1008, 768, 1563, 685, 1283, 1082, 986];
     const [historyArray, setHistoryArray] = useState(null)
     const [average, setAverage] = useState(0);
+    const weeklyAverage = calculateAverage(data);
     const [goal, setGoal] = useState(0);
+    const monthLabels = ['November', 'December', 'January', 'February', 'March', 'April'];
+    const monthData = [0, 0, 0, 6315, 3087, 7375]; 
+    const monthlyAverage = calculateAverage(monthData);
+
+
+    const [buttonText, setButtonText] = useState('Week');
+
+    // Function to handle button press
+    const handlePress = () => {
+        // Toggle button text
+        setButtonText(buttonText === 'Week' ? 'Month' : 'Week');
+    };
 
     const writeFile = async () => {
         const fileUri = FileSystem.documentDirectory + 'history.txt';
@@ -81,18 +114,22 @@ const labels = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
                 <ScrollView>
         <Text style={HistoryStyle.title}>Vitamin D</Text>
         <Text style={HistoryStyle.title}>History</Text>
+        <TouchableOpacity onPress={handlePress} style={HistoryStyle.dropdownButton}>
+                <Text style={{ color: 'black', fontSize: 25 }}>{buttonText}</Text>
+            </TouchableOpacity>
         <View style={HistoryStyle.goalBox}>
         <View style={HistoryStyle.avgBox2}>
             <Text style={HistoryStyle.text}>Goal: {goal}</Text>
         </View>
         </View>
         <View style={HistoryStyle.barGraphBox}>
-        <Text style={HistoryStyle.historyText}>{historyArray}</Text>
+        <BarGraph labels={buttonText === 'Week' ? labels : monthLabels} data={buttonText === 'Week' ? data : monthData} />
+        {/* <Text style={HistoryStyle.historyText}>{historyArray}</Text> */}
         </View>
         <View style={HistoryStyle.avgBox}>
         <View style={HistoryStyle.avgBox2}>
-            <Text style={HistoryStyle.text}>Average Daily Vitamin D</Text>
-            <Text style={HistoryStyle.text}>{average}</Text>
+            <Text style={HistoryStyle.text}>{buttonText === 'Week' ? 'Average Daily Vitamin D' : 'Average Monthly Vitamin D'}</Text>
+            <Text style={HistoryStyle.text}>{buttonText === 'Week' ? weeklyAverage : monthlyAverage}</Text>
         </View>
         </View>
       </ScrollView>

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 70,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#9DBD74',
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
   selectedItem: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: '#EBFFD2',
   },
   toolbarText: {
     color: 'black',

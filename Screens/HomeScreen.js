@@ -92,9 +92,6 @@ const HomeScreen = ({vitaminD}) => {
         <ProgressBar progress={progress} />
         <Text style={HomeScreenStyle.vitaminDLevel1}>{vitaminDReceived}/{vitaminDNeeded} IU</Text>
     </View>
-    <View style={HomeScreenStyle.sessionsBox}>
-        <Text style={HomeScreenStyle.boxText}>Tracked Sessions</Text>
-    </View>
       </ScrollView>
     </SafeAreaView>
     </View>
