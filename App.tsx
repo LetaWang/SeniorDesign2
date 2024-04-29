@@ -112,7 +112,7 @@ const writeFile2 = async () => {
             AF = 0.49;
          }
 
-        var SED =((heartRate * 60)/40) / 100;
+        var SED =((heartRate * 10)/40) / 100;
         const ASCF = 1.049;
         const GCF = 0.417;
         var VDD = SED * ASCF * GCF;
@@ -124,7 +124,7 @@ const writeFile2 = async () => {
         setVitaminD(newValue);
       }
 
-    }, 60000); // 60000 milliseconds = 1 minute
+    }, 10000); // 60000 milliseconds = 1 minute
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(interval);
